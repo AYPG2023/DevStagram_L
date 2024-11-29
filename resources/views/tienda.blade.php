@@ -1,9 +1,11 @@
 @extends ('/layouts.app')
 
 @section('titulo')
-    Nosotros.
+
+    Bienvenido a nuestra tienda.
+
 @endsection
 
 @section('contenido')
-    Sobre nosotros.
+    Nuestros Productos.
 @endsection
