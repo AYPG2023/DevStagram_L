@@ -42,6 +42,10 @@ class RegisterController extends Controller
           'password' => $request->password
         ]);
 
+        // Otra forma de Autenticar
+        //auth()->attempt($request->only('email', 'password'));
+
+
         // Redireccionar a la página principal con un mensaje de éxito
        // return redirect('/')->with('success', 'Cuenta creada exitosamente.');
        return redirect()->route('posts.index');

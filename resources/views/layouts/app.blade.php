@@ -14,12 +14,23 @@
             <h1 class="text-3xl font-black">
                 DevStagram
             </h1>
-
+            @guest
             <nav class="flex gap-2 items-center">
-                <a class="font-bold uppercase text-gray-600 text-sm" href="#">Login</a>
+                <a class="font-bold uppercase text-gray-600 text-sm" href="{{route('login')}}">Login</a>
                 <a class="font-bold uppercase text-gray-600 text-sm" href="{{route('register')}}">Crear Cuenta</a> <!--Se manda a llamar el nombre de la variable que se coloco en we,php -> name() 
                 para cambiar el nombre de la vista que se mostrara ennel navegador -->
             </nav>
+            @endguest
+            @auth
+            <nav class="flex gap-2 items-center">
+                <a class="font-bold uppercase text-gray-600 text-sm" href="#">Hola: <span class="font-normal"> {{auth()->user()->username}} </span></a>
+                
+                <form method="POST" action="{{route('logout')}}">
+                    @csrf
+                <button type="submit" class="font-bold uppercase text-gray-600 text-sm">Cerrar Sesión</button> </form> <!--Se manda a llamar el nombre de la variable que se coloco en we,php -> name() 
+                para cambiar el nombre de la vista que se mostrara ennel navegador -->
+            </nav>                
+            @endauth
          </div>
         </header>
 

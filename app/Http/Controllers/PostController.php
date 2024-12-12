@@ -6,8 +6,15 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware para verificar autenticación
+        $this->middleware('auth');
+    }
 
-    public function index () {
-        dd(auth()->user()); // Ayuda para saber si un usuario esta autenticado 
+    public function index()
+    {
+        // Vista del muro/dashboard
+        return view('dashboard');
     }
 }
