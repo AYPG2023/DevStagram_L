@@ -16,16 +16,16 @@ class LoginController extends Controller
     {
         // Validación de los campos del formulario
         $this->validate($request, [
-            'email' => 'required|email',   // Campo email requerido
-            'password' => 'required'       // Campo contraseña requerido
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-
-        // Autenticar al usuario
-        if (!auth()->attempt($request->only('email', 'password'))) {
-            return back()->with('mensaje', 'Credenciales incorrectas'); // Mensaje de error
+    
+        // Intentar autenticar al usuario
+        if (!auth()->attempt($request->only('email', 'password'), $request->remember)) {
+            return back()->with('mensaje', 'Credenciales incorrectas');
         }
-
-        // Redirigir al muro tras autenticación exitosa
-        return redirect()->route('posts.index');
-    }
+    
+        // Redirigir al muro del usuario autenticado
+        return redirect()->route('posts.index', ['user' => auth()->user()->username]);
+    }    
 }
