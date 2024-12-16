@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo');
+            $table->text('descripcion');
+            $table->string('imagen');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Esto funiona para mandar a llamar el id de la tabla de usuarios para poder identicar 
+            // quien lo subio y el cascade es para que cuando el usuario borre un post borre toda la data.
             $table->timestamps();
         });
     }

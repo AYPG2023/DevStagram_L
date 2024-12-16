@@ -20,7 +20,7 @@
         >@csrf</form>        
         </div>
         <div class="md:w-1/2 p-10  bg-white rounded-lg shadow-xl mt-10 md:mt-0">
-            <form action="{{route('register')}}" method="POST" novalidate>  <!--Esto funciona para que este formulario tenga una accion y se pueda cargar la infor desde las peticiones tipo post-->
+            <form action="{{route('posts.store')}}" method="POST" novalidate>  <!--Esto funciona para que este formulario tenga una accion y se pueda cargar la infor desde las peticiones tipo post-->
                 @csrf <!--Esto hace que se comniqyue perfectamente con las peticiones -->
                  <div class="mb-5">
                      <label for="titulo" class="mb-2 block uppercase text-gray-500 font-bold">Titulo</label>
@@ -42,6 +42,12 @@
                     @error('descripcion')
                         <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
                     @enderror
+                </div>
+                <div class="mb-5" >
+                    <input name="imagen" type="hidden" value="{{ old('imagen')}}"/>
+                @error('imagen')
+                    <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
+                @enderror
                 </div>
                 <input type="submit" 
                 value="Publicar"
