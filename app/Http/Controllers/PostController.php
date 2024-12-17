@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -11,12 +12,12 @@ class PostController extends Controller
     public function __construct()
     {
         // Middleware para verificar autenticación
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['show', 'index']); //Esto funciona para decir que pagina puede entrar sin necesidad de estar googleados   
     }
 
     public function index(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->get();
+        $posts = Post::where('user_id', $user->id)->paginate(8);  // paginate funciona para hacer paginacion en las publicaciones 
         // Vista del muro/dashboard
         return view('dashboard', [
             'user'=> $user,
@@ -54,4 +55,22 @@ class PostController extends Controller
 
         return redirect()->route('posts.index', auth()->user()->username);
     }
+
+    public function show(User $user, Post $post){
+        return view('posts.show',[
+            'post' => $post,
+            'user' => $user,
+    ]);
+
+    }
+    public function principal()
+    {
+        return view('principal');
+    }
+    
+    public function destroy(Post $post)
+    {
+        dd('Eliminando', $post->id);
+    }
+
 }

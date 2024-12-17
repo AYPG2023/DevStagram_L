@@ -4,8 +4,7 @@
     Perfil: {{$user->username}} 
 @endsection
 
-@section('contenido')
-    
+@section('contenido')  
 <div class="flex  justify-center">
     <div class="w-full md:w-8/12 lg:w-6/12 flex flex-col items-center md:flex-row">
         <div class="w-8/12 lg:w-6/12 px-5">
@@ -21,9 +20,7 @@
         
         </div>
     </div>
-
 </div>
-
 <section class="container mx-auto mt-10">
     <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
 
@@ -31,15 +28,21 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
   @foreach ( $posts as $post )
       <div>
-        <a>
+        <a href="{{ route('posts.show', [ 'post' => $post, 'user' => $user]) }}">   <!--Esto funciona para cuando en la ruta quieres qie aparezca el nombre del 
+        usuario -->
             <img src="{{ asset('uploads') . '/' . $post->imagen }}" alt="Imagen del Posts {{ $post->titulo }}">
         </a>
       </div>
   @endforeach
     </div>
+
+    <div class="my-10">
+        {{ $posts->links()}} <!--Faunciona para crear la paginacion en las publicaciones y tenga un diseño  se necesita agregar
+        esta vista a tailwind.config.js para que pueda tener los diseños y se vea mejor-->
+    </div>
+
     @else
         <p class="text-gray-600 uppercase text-sm text-center font-bold">No hay posts</p>
     @endif
 </section>
-
 @endsection
