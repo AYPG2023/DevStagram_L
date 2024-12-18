@@ -3,7 +3,6 @@
 @section('titulo')
     {{$post->titulo}}
 @endsection
-
 @section('contenido')
     <div class="container mx-auto md:flex">
         <div class="md:-1/2">
@@ -23,7 +22,7 @@
                 </p>
             </div>
             @auth
-            @if ($post->user_id == auth()->user->id)
+            @if ($post->user_id === auth()->user->id)
             <form action="">
                 <input 
                 type="submit"
@@ -31,12 +30,12 @@
                 class="bg-red-500 hover:bg-red-600 p-2 rounded text-white font-bold mt-4 cursor-pointer"
                 />
             </form>
+            @endif
             @endauth
         </div>
 
         <div class="md:w-1/2 p-5">
             <div class="shadow bg-white p-5 mb-5">
-
                 @auth
                 <p class="text-xl font-bold text-center mb-4">Agregar un nuevo comentario</p>
                     @if (session('mensaje'))
@@ -52,7 +51,7 @@
                             id="comentario" 
                             name="comentario" 
                             placeholder="Agrega un Comentario" 
-                            class="border p-3 w-full rounded-lg @error('name') border-red-500 @enderror"
+                            class="border p-3 w-full rounded-lg @error('comentario') border-red-500 @enderror"
                         ></textarea> 
                         @error('comentario')
                             <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
@@ -65,18 +64,16 @@
                         uppercase font-bold w-full p-3 text-white rounded-lg">
                 </form>
                 @endauth
-
                 <div class="bg-white shadow mb-5 max-h-96 overflow-y-scroll mt-10">
                     @if ($post->comentarios->count())
-                    @foreach ( $post->comentarios as $comentario )
-                        <div class="p-5 border-gray-500">
-                            <a href="{{route('posts.index', $comentario->user)}}">{{$comentario->user->username}}</a>
+                    @foreach ( $post->comentarios as $comentario)
+                        <div class="p-5 border-gray-300 border-b">
+                            <a href="{{route('posts.index', $comentario->user)}}" class="font-bold"> {{$comentario->user->username}}</a>
                             <p>{{ $comentario->comentario}}</p>
                             <p class="text-sm text-gray-500">{{ $comentario->created_at->diffForHumans()}}</p>
 <!--Funciona para validar si hay comentarios y imprimirlos  -->
                         </div>
                     @endforeach
-                        
                     @else
                         <p class=" p-10 text-center">
                                 No hay comentarios.
