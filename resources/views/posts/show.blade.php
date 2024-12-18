@@ -3,6 +3,7 @@
 @section('titulo')
     {{$post->titulo}}
 @endsection
+
 @section('contenido')
     <div class="container mx-auto md:flex">
         <div class="md:-1/2">
@@ -22,7 +23,7 @@
                 </p>
             </div>
             @auth
-            @if ($post->user_id === auth()->user->id)
+            @if ($post->user_id === auth()->user()->id)
             <form action="">
                 <input 
                 type="submit"
