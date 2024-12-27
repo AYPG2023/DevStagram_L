@@ -47,4 +47,7 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(Post::class);  // Relacion one to one base de datos 
     }
+    public function likes(){
+        return $this->hasMany(Like::class);  // Relacion one to one base de datos para que pueda tener varios likes un usuario
+    }
 }
