@@ -19,6 +19,8 @@ class RegisterController extends Controller
     {
         // dd($request); // db es una función que se utiliza para mostrar los datos enviados al controlador
         // dd($request->get('username')); | Esto permite ver un dato específico del formulario enviado
+        //Modifica el Request
+        $request->request->add(['username' => Str::slug($request->username)]);
 
         // Validación.
         $this->validate($request, [
