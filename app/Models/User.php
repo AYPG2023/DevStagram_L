@@ -44,10 +44,20 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);  // Relacion one to one base de datos 
     }
-    public function likes(){
+    public function likes()
+    {
         return $this->hasMany(Like::class);  // Relacion one to one base de datos para que pueda tener varios likes un usuario
     }
+
+    //Almacena los Usuarios que siguen a un usuario
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    //Almacena los que siguen a un usuario
 }
