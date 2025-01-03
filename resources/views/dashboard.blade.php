@@ -27,24 +27,29 @@
                         @endif
                     @endauth
                 </div>
-                <p class="text-gray-800 text-sm mb-3 font-bold"> 0 <span class="font-normal">Seguidores</span></p>
-                <p class="text-gray-800 text-sm mb-3 font-bold"> 0 <span class="font-normal">Siguiendo</span></p>
+                <p class="text-gray-800 text-sm mb-3 font-bold mt-5"> {{  $user->followers->count()}} <span class="font-normal"> @choice('Seguidor|Seguidores',$user->followers->count())
+                <p class="text-gray-800 text-sm mb-3 font-bold"> {{ $user->followings->count() }} <span class="font-normal">Siguiendo</span></p>
                 <p class="text-gray-800 text-sm mb-3 font-bold"> {{ $user->posts->count() }} <span
                         class="font-normal">Posts</span></p>
                 @auth
                     @if ($user->id !== auth()->user()->id)
-                        <form action="{{ route('users.follow', $user) }}" method="POST">
-                            @csrf
-                            <input type="submit" value="Seguir"
-                                class="bg-blue-400  text-white px-3 py-1 text-xs font-bold rounded-md cursor-pointer">
-                        </form>
-                        <!--Dejar de Seguir -->
-                        <form action="{{ route('users.unfollow', $user) }}" method="POST">
-                            @csrf
-                            @method('DELETE') <!-- Este es necesario para que el método DELETE sea interpretado correctamente -->
-                            <input type="submit" value="Dejar de seguir"
-                                class="bg-red-400 text-white px-3 py-1 text-xs font-bold rounded-md cursor-pointer">
-                        </form>                        
+                        @if ( !$user->siguiendo(auth()->user()))
+                            <!--Funciona para poder mostrar el boton de seguir o dejar de seguir -->
+                            <form action="{{ route('users.follow', $user) }}" method="POST">
+                                @csrf
+                                <input type="submit" value="Seguir"
+                                    class="bg-blue-400  text-white px-3 py-1 text-xs font-bold rounded-md cursor-pointer">
+                            </form>
+                        @else
+                            <!--Dejar de Seguir -->
+                            <form action="{{ route('users.unfollow', $user) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <!-- Este es necesario para que el método DELETE sea interpretado correctamente -->
+                                <input type="submit" value="Dejar de seguir"
+                                    class="bg-red-400 text-white px-3 py-1 text-xs font-bold rounded-md cursor-pointer">
+                            </form>
+                        @endif
                     @endif
                 @endauth
             </div>
@@ -53,25 +58,6 @@
     <section class="container mx-auto mt-10">
         <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
 
-        @if ($posts->count())
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                @foreach ($posts as $post)
-                    <div>
-                        <a href="{{ route('posts.show', ['post' => $post, 'user' => $user]) }}"> <!--Esto funciona para cuando en la ruta quieres qie aparezca el nombre del
-                usuario -->
-                            <img src="{{ asset('uploads') . '/' . $post->imagen }}"
-                                alt="Imagen del Posts {{ $post->titulo }}">
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="my-10">
-                {{ $posts->links() }} <!--Faunciona para crear la paginacion en las publicaciones y tenga un diseño  se necesita agregar
-                esta vista a tailwind.config.js para que pueda tener los diseños y se vea mejor-->
-            </div>
-        @else
-            <p class="text-gray-600 uppercase text-sm text-center font-bold">No hay posts</p>
-        @endif
+        <x-Listar-post :posts="$posts"  /> <!--Implementación de componente para mostrar las publicaciones de los usuarios.-->
     </section>
 @endsection

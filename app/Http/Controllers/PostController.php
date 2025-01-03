@@ -19,7 +19,7 @@ class PostController extends Controller
 
     public function index(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->paginate(8);  // paginate funciona para hacer paginacion en las publicaciones 
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(8);  // paginate funciona para hacer paginacion en las publicaciones 
         // Vista del muro/dashboard
         return view('dashboard', [
             'user'=> $user,

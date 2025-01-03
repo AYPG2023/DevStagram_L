@@ -8,11 +8,13 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\LikeController;
 
 // Ruta raíz con middleware de autenticación
-Route::get('/', [PostController::class, 'principal'])->middleware('auth');
+Route::get('/', HomeController::class)->name('home');
+
 
 // Rutas para el perfil
 Route::get('/editar-perfil', [PerfilController::class, 'index'])->name('perfil.index');

@@ -50,7 +50,7 @@ class RegisterController extends Controller
 
         // Redireccionar a la página principal con un mensaje de éxito
        // return redirect('/')->with('success', 'Cuenta creada exitosamente.');
-       return redirect()->route('posts.index');
+       return redirect()->route('posts.index', ['user' => auth()->user()->username]);
     }
 }
 
